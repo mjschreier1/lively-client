@@ -1,0 +1,16 @@
+<div id="buttonsList">
+  <ul>
+    <div class="buttonsRow" id="buttonsRowOne">
+      <li *ngFor="let button of buttonsRowOne">
+        <app-button class="buttonComponent" [name]="button.name" [identifier]="button.id" [class]="button.iconClass"></app-button>
+      </li>
+    </div>
+  </ul>
+  <ul>
+    <div class="buttonsRow" id="buttonsRowTwo">
+      <li *ngFor="let button of buttonsRowTwo">
+        <app-button class="buttonComponent" [name]="button.name" [id]="button.id"></app-button>
+      </li>
+    </div>
+  </ul>
+</div>

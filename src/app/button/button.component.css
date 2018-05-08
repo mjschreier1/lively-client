@@ -1,0 +1,36 @@
+h2 {
+  margin: 0;
+}
+
+.button {
+  width: 45vw;
+  height: 35vh;
+  background-color: rgba(256, 256, 256, 0.8);
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: #70AE6E;
+}
+
+i {
+  font-size: 28vw;
+}
+
+@media(min-width: 640px) and (max-height: 800px) {
+  .button {
+    width: 23vw;
+    height: 65vh;
+  }
+
+  i {
+    font-size: 16vw;
+  }
+}
+
+@media(min-width: 1200px) {
+  i {
+    font-size: 144px;
+  }
+}

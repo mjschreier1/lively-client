@@ -1,0 +1,18 @@
+#buttonsList {
+  height: 80vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.buttonsRow {
+  display: flex;
+  justify-content: space-around;
+}

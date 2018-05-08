@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Button } from '../interfaces/button';
 
 @Component({
   selector: 'app-main',
@@ -10,6 +11,7 @@ export class MainComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }
