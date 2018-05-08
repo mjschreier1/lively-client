@@ -1,0 +1,15 @@
+footer {
+  background-color: #483C46;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+p {
+  margin: 0;
+  color: #F4743B;
+}
+
+img {
+  height: 10vh;
+}
