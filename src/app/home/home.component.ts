@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit {
       {
         name: "Community Calendar",
         id: "communityCalendar",
-        iconClass: "far fa-calendar-alt"
+        iconClass: "far fa-calendar-alt",
+        routerLink: "/calendar"
       }
     ];
 
