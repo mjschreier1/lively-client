@@ -1,0 +1,14 @@
+main {
+  height: 80vh;
+  width: 100vw;
+  background-image: url("../../assets/images/apartment.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* @media(max-width: 564px) {
+  main {
+    background-size:
+  }
+} */

@@ -1,8 +1,11 @@
 footer {
   background-color: #483C46;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  position: fixed;
+  bottom: 0px;
+  width: 100vw;
 }
 
 p {
@@ -12,4 +15,14 @@ p {
 
 img {
   height: 10vh;
+}
+
+.powered {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.copyright {
+  margin-right: 20px;
 }
