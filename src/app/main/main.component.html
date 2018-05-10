@@ -1,4 +1,4 @@
-<main>
+<main [ngClass]="{ 'notAuthenticated': !user }">
   <app-credentials *ngIf="!user"></app-credentials>
   <router-outlet *ngIf="user"></router-outlet>
 </main>

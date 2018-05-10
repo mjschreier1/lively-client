@@ -9,3 +9,7 @@ main {
   position: absolute;
   top: 10vh;
 }
+
+.notAuthenticated {
+  height: 80vh;
+}

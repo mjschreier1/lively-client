@@ -7,6 +7,7 @@ import { Button } from '../interfaces/button';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+  // user = true
 
   constructor() { }
 
