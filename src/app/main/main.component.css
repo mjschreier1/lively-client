@@ -1,10 +1,11 @@
 main {
-  height: 80vh;
+  height: auto;
   width: 100vw;
   background-image: url("../../assets/images/apartment.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  position: sticky;
+  background-attachment: fixed;
+  position: absolute;
   top: 10vh;
 }
