@@ -6,12 +6,6 @@
   justify-content: center;
 }
 
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .buttonsRow {
   display: flex;
   justify-content: space-around;

@@ -1,0 +1,15 @@
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: static;
+}
+
+h3, p {
+  margin: 0;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+}

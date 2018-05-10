@@ -1,3 +1,11 @@
-<p>
-  calendar works!
-</p>
+<ul>
+  <li *ngFor="let event of events">
+    <div class="card">
+      <h3>{{ event.name }}</h3>
+      <p>{{ event.start.toLocaleTimeString("en-US").replace(":00 ", "") }} - {{ event.finish.toLocaleTimeString("en-US").replace(":00 ", "") }}</p>
+      <p>{{ event.start.toDateString() }}</p>
+      <p>Location: {{ event.location }}</p>
+      <p *ngIf="event.description">{{ event.description }}</p>
+    </div>
+  </li>
+</ul>

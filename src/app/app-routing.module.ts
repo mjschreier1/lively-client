@@ -8,6 +8,8 @@ const routes: Routes = [
     path: '', component: HomeComponent
   }, {
     path: 'calendar', component: CalendarComponent
+  }, {
+    path: '**', redirectTo: ''
   }
 ];
 
