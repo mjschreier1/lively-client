@@ -13,6 +13,7 @@ export class CalendarComponent implements OnInit {
   constructor(private _httpService: HttpService) { }
 
   ngOnInit() {
+    // if()
     this._httpService.getEvents().subscribe(events => {
       events = events.map(event => {
         event.start = new Date(event.start);
