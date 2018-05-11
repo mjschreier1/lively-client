@@ -16,21 +16,26 @@ export class CalendarComponent implements OnInit {
   momentPlusTwoHours: Date = new Date(this.moment.valueOf() + 7200000);
 
   startYear: number = this.moment.getFullYear();
-  startMonth: number = this.moment.getMonth() + 1;
-  startDate: number = this.moment.getDate();
+  startMonth: any = this.moment.getMonth() + 1;
+  startDate: any = this.moment.getDate();
   startHour: number = this.moment.getHours();
-  startMinute: number = this.moment.getMinutes();
+  startMinute: any = this.moment.getMinutes();
   endYear: number = this.momentPlusTwoHours.getFullYear();
-  endMonth: number = this.momentPlusTwoHours.getMonth() + 1;
-  endDate: number = this.momentPlusTwoHours.getDate();
+  endMonth: any = this.momentPlusTwoHours.getMonth() + 1;
+  endDate: any = this.momentPlusTwoHours.getDate();
   endHour: number = this.momentPlusTwoHours.getHours();
-  endMinute: number = this.momentPlusTwoHours.getMinutes();
+  endMinute: any = this.momentPlusTwoHours.getMinutes();
+  startPm: boolean = this.startHour > 11;
+  endPm: boolean = this.endHour > 11;
 
   monthValidator: Object = {};
   monthOptions: Array<String> = [];
   startDateValidator: Object = {};
+  startDateOptions: Array<String> = [];
   endDateValidator: Object = {};
-
+  endDateOptions: Array<String> = [];
+  hourOptions: Array<number> = [];
+  minuteOptions: Array<string> = [];
 
   constructor(
     private _httpService: HttpService,
@@ -39,16 +44,28 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this._authentication.user.subscribe(user => {
-      console.log("calendar component got")
-      console.log(user)
       this.user = user;
       if(user.admin) {
+        while(this.startMinute % 5 !== 0) {
+          if(this.startMinute > 55) {
+            this.startMinute = 55;
+            this.endMinute = 55;
+          } else {
+            this.startMinute < 9 ? this.startMinute = `0${this.startMinute.valueOf() + 1}` : this.startMinute++;
+            this.endMinute = this.startMinute;
+          }
+        }
         this.setMonthValidator();
         this.setDateValidator(this.startMonth, this.startYear, true);
         this.setDateValidator(this.endMonth, this.endYear, false);
+        if(this.startMonth < 10) { this.startMonth = `0${this.startMonth}` }
+        if(this.startDate < 10) { this.startDate = `0${this.startDate}` }
+        if(this.endMonth < 10) { this.endMonth = `0${this.endMonth}` }
+        if(this.endDate < 10) { this.endDate = `0${this.endDate}` }
+        for(let i = 1; i < 13; i++) { this.hourOptions.push(i) }
+        for(let i = 0; i < 60; i+= 5) { i < 10 ? this.minuteOptions.push(`0${i}`) : this.minuteOptions.push(`${i}`) }
       }
     })
-    // this.user = this._authentication.userObject;
 
     this._httpService.getEvents().subscribe(events => {
       events = events.map(event => {
@@ -58,8 +75,6 @@ export class CalendarComponent implements OnInit {
       })
       this.events = events;
     })
-
-    setTimeout(() => console.log(this.user), 8000)
   }
 
   setMonthValidator() {
@@ -79,10 +94,15 @@ export class CalendarComponent implements OnInit {
       if(year % 4 === 0) { daysInMonth++ }
     }
     for(let i = 1; i < daysInMonth + 1; i++) {
-      console.log(i);
       let key = i < 10 ? `0${i}` : `${i}`;
-      if(start) { this.startDateValidator[key] = i }
-      else { this.endDateValidator[key] = i }
+      if(start) {
+        this.startDateValidator[key] = i;
+        this.startDateOptions.push(key);
+      }
+      else {
+        this.endDateValidator[key] = i;
+        this.endDateOptions.push(key);
+      }
     }
   }
 
