@@ -1,4 +1,12 @@
 <div id="calendar-component">
+  <form #newEvent="ngForm" (ngSubmit)="addEvent()" *ngIf="user && user.admin">
+    <label for="start">Start Time</label>
+    <select name="month" [(ngModel)]="month">
+      <option *ngFor="let month of monthOptions" value="{{ month }}">{{ month }}</option>
+    </select>
+
+  </form>
+
   <ul>
     <li *ngFor="let event of events">
       <div class="card">
