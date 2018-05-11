@@ -1,0 +1,95 @@
+<div id="calendar-component">
+  <div id="addForm" *ngIf="user.admin">
+    <div class="card">
+      <h2>Add Event</h2>
+      <form #newEvent="ngForm" (ngSubmit)="addEvent()">
+        <div class="flex">
+          <div class="flexContainer">
+            <div class="lineBreak">
+              <label for="start">Start Time</label>
+            </div>
+            <div class="lineBreak">
+              <select name="startMonth" [(ngModel)]="startMonth">
+                <option *ngFor="let month of monthOptions" value="{{ month }}">{{ month }}</option>
+              </select>
+              <p class="dateSeparator"> / </p>
+              <select name="startDate" [(ngModel)]="startDate">
+                <option *ngFor="let date of startDateOptions" value="{{ date }}">{{ date }}</option>
+              </select>
+              <p class="dateSeparator"> / </p>
+              <input type="number" name="startYear" class="yearInput" [(ngModel)]="startYear" />
+              <div class="timeBreak">
+                <p class="dateSeparator"> at </p>
+                <select name="startHour" [(ngModel)]="startHour">
+                  <option *ngFor="let hour of hourOptions" value="{{ pm && hour !== 12 ? hour + 12 : hour }}">{{ hour }}</option>
+                </select>
+                <p class="dateSeparator"> : </p>
+                <select name="startMinute" [(ngModel)]="startMinute">
+                  <option *ngFor="let minute of minuteOptions" value="{{ minute }}">{{ minute }}</option>
+                </select>
+                <select name="startPm" [(ngModel)]="startPm">
+                  <option value="false">am</option>
+                  <option value="true">pm</option>
+                </select>
+              </div>
+            </div>
+            <div class="lineBreak" id="endTime">
+              <label for="end">End Time</label>
+            </div>
+            <div class="lineBreak">
+              <select name="endMonth" [(ngModel)]="endMonth">
+                <option *ngFor="let month of monthOptions" value="{{ month }}">{{ month }}</option>
+              </select>
+              <p class="dateSeparator"> / </p>
+              <select name="endDate" [(ngModel)]="endDate">
+                <option *ngFor="let date of endDateOptions" value="{{ date }}">{{ date }}</option>
+              </select>
+              <p class="dateSeparator"> / </p>
+              <input type="number" name="endYear" class="yearInput" [(ngModel)]="endYear" />
+              <div class="timeBreak">
+                <p class="dateSeparator"> at </p>
+                <select name="endHour" [(ngModel)]="endHour">
+                  <option *ngFor="let hour of hourOptions" value="{{ pm && hour !== 12 ? hour + 12 : hour }}">{{ hour }}</option>
+                </select>
+                <p class="dateSeparator"> : </p>
+                <select name="endMinute" [(ngModel)]="endMinute">
+                  <option *ngFor="let minute of minuteOptions" value="{{ minute }}">{{ minute }}</option>
+                </select>
+                <select name="endPm" [(ngModel)]="endPm">
+                  <option value="false">am</option>
+                  <option value="true">pm</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="flexContainer">
+            <div class="lineBreak">
+              <label for="name">Name: </label>
+              <input type="text" name="name" [(ngModel)]="name" required />
+            </div>
+            <div class="lineBreak">
+              <label for="location">Location: </label>
+              <input type="text" name="location" [(ngModel)]="location" required />
+            </div>
+            <label for="description" class="lineBreak">Description (Optional)</label>
+            <textarea rows="3" name="description" [(ngModel)]="description" class="lineBreak"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="lineBreak" [disabled]="!newEvent.form.valid">Add Event</button>
+      </form>
+      <p *ngIf="responseStatus" id="status">{{ responseStatus }}</p>
+    </div>
+  </div>
+
+  <ul>
+    <li *ngFor="let event of events">
+      <div class="card">
+        <h3>{{ event.name }}</h3>
+        <p>{{ event.start.toLocaleTimeString("en-US").replace(":00 ", "") }} - {{ event.finish.toLocaleTimeString("en-US").replace(":00 ", "") }}</p>
+        <p>{{ event.start.toDateString() }}</p>
+        <p>Location: {{ event.location }}</p>
+        <p *ngIf="event.description">{{ event.description }}</p>
+      </div>
+    </li>
+  </ul>
+</div>

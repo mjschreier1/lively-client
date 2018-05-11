@@ -1,0 +1,107 @@
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0 calc(10vh + 20px);
+}
+
+h3, p {
+  margin: 0;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+}
+
+#top-spacer {
+  height: 10px;
+}
+
+#calendar-component {
+  position: static;
+  color: #3C6E71;
+}
+
+#addForm {
+ display: flex;
+ justify-content: space-around;
+ margin: 10px 0;
+}
+
+h2 {
+  margin-top: 10px;
+}
+
+.dateSeparator {
+  display: inline;
+}
+
+.yearInput {
+  width: 40px;
+}
+
+.timeBreak {
+  display: inline;
+}
+
+.lineBreak {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#endTime {
+  margin-top: 20px;
+}
+
+button {
+  background-color: #BEEE62;
+  font-size: 16px;
+}
+
+button:disabled {
+  background-color: #aaaaaa;
+  color: #eeeeee;
+  cursor: default;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+textarea {
+  width: 70vw;
+}
+
+#status {
+  text-align: center;
+}
+
+@media(max-width: 600px) {
+  .timeBreak {
+    display: block;
+  }
+}
+
+@media(min-width: 900px) {
+  .flex {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  button {
+    margin: auto;
+  }
+
+  li {
+    text-align: center;
+  }
+
+  textarea {
+    width: 30vw;
+  }
+}

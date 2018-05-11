@@ -1,7 +1,11 @@
 header {
   background-color: #483C46;
-  display: flex;
+  /* display: flex; */
   height: 10vh;
+  width: 100vw;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
 }
 
 h1 {

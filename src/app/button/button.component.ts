@@ -9,6 +9,7 @@ export class ButtonComponent implements OnInit {
   @Input() name;
   @Input() identifier;
   @Input() class;
+  @Input() routerLink;
 
   constructor() { }
 

@@ -1,3 +1,9 @@
-<main>
-  <router-outlet></router-outlet>
+<main [ngClass]="{ 'notAuthenticated': !user.authenticated }">
+  <div *ngIf="!user.authenticated;else authenticated">
+    <app-credentials></app-credentials>
+  </div>
 </main>
+
+<ng-template #authenticated>
+  <router-outlet></router-outlet>
+</ng-template>

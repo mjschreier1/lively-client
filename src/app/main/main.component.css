@@ -1,9 +1,15 @@
 main {
-  height: 80vh;
+  height: auto;
   width: 100vw;
   background-image: url("../../assets/images/apartment.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed;
+  position: absolute;
+  top: 10vh;
 }
 
+.notAuthenticated {
+  height: 80vh;
+}

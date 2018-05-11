@@ -3,16 +3,25 @@
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  justify-content: space-around;
 }
 
 .buttonsRow {
   display: flex;
   justify-content: space-around;
+}
+
+ul {
+  width: 100%;
+}
+
+/* li {
+  width: 20vw;
+} */
+
+@media(min-width: 600px) {
+  #buttonsList {
+    flex-direction: row;
+    align-items: center;
+  }
 }

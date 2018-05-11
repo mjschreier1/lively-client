@@ -17,10 +17,28 @@ export class HomeComponent implements OnInit {
       {
         name: "Community Calendar",
         id: "communityCalendar",
-        iconClass: "far fa-calendar-alt"
+        iconClass: "far fa-calendar-alt",
+        routerLink: "/calendar"
+      }, {
+        name: "Make a Payment",
+        id: "payment",
+        iconClass: "far fa-credit-card",
+        routerLink: "/payment"
       }
     ];
 
-    this.buttonsRowTwo = [];
+    this.buttonsRowTwo = [
+      {
+        name: "Service Requests",
+        id: "serviceRequests",
+        iconClass: "fas fa-wrench",
+        routerLink: "/service"
+      }, {
+        name: "Reserve Amenity",
+        id: "reserve",
+        iconClass: "fab fa-buromobelexperte",
+        routerLink: "reserve"
+      }
+    ];
   }
 }
