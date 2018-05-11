@@ -1,5 +1,5 @@
 <div id="calendar-component">
-  <div id="addForm" *ngIf="user && user.admin">
+  <div id="addForm" *ngIf="user.admin">
     <div class="card">
       <h2>Add Event</h2>
       <form #newEvent="ngForm" (ngSubmit)="addEvent()">
@@ -72,7 +72,7 @@
               <input type="text" name="location" [(ngModel)]="location" required />
             </div>
             <label for="description" class="lineBreak">Description (Optional)</label>
-            <textarea rows="3" cols="50" name="description" [(ngModel)]="description" class="lineBreak"></textarea>
+            <textarea rows="3" name="description" [(ngModel)]="description" class="lineBreak"></textarea>
           </div>
         </div>
         <button type="submit" class="lineBreak" [disabled]="!newEvent.form.valid">Add Event</button>

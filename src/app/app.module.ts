@@ -13,6 +13,9 @@ import { HomeComponent } from './home/home.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { HttpService } from './services/http.service';
 import { CredentialsComponent } from './credentials/credentials.component';
+import { PaymentComponent } from './payment/payment.component';
+import { ServiceComponent } from './service/service.component';
+import { ReserveComponent } from './reserve/reserve.component';
 
 
 
@@ -25,7 +28,10 @@ import { CredentialsComponent } from './credentials/credentials.component';
     ButtonComponent,
     HomeComponent,
     CalendarComponent,
-    CredentialsComponent
+    CredentialsComponent,
+    PaymentComponent,
+    ServiceComponent,
+    ReserveComponent
   ],
   imports: [
     BrowserModule,

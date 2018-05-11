@@ -69,6 +69,10 @@ button:hover {
   cursor: pointer;
 }
 
+textarea {
+  width: 70vw;
+}
+
 @media(max-width: 600px) {
   .timeBreak {
     display: block;
@@ -91,5 +95,9 @@ button:hover {
 
   li {
     text-align: center;
+  }
+
+  textarea {
+    width: 30vw;
   }
 }

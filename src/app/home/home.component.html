@@ -15,7 +15,13 @@
   <ul>
     <div class="buttonsRow" id="buttonsRowTwo">
       <li *ngFor="let button of buttonsRowTwo">
-        <app-button class="buttonComponent" [name]="button.name" [id]="button.id"></app-button>
+        <app-button
+          class="buttonComponent"
+          [name]="button.name"
+          [identifier]="button.id"
+          [class]="button.iconClass"
+          [routerLink]="button.routerLink">
+        </app-button>
       </li>
     </div>
   </ul>

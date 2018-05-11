@@ -52,6 +52,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this._authentication.user.subscribe(user => {
+      console.log(user)
       this.user = user;
       if (user.admin) {
         while (this.startMinute % 5 !== 0) {
@@ -93,8 +94,8 @@ export class CalendarComponent implements OnInit {
 
     this._httpService.getEvents().subscribe(events => {
       events = events.map(event => {
-        event.start = new Date(event.start);
-        event.finish = new Date(event.finish);
+        event.start = new Date(new Date(event.start).valueOf() + 3600000);
+        event.finish = new Date(new Date(event.finish).valueOf() + 3600000);
         return event;
       });
       this.events = events;
