@@ -77,6 +77,7 @@
         </div>
         <button type="submit" class="lineBreak" [disabled]="!newEvent.form.valid">Add Event</button>
       </form>
+      <p *ngIf="responseStatus" id="status">{{ responseStatus }}</p>
     </div>
   </div>
 

@@ -45,6 +45,8 @@ export class CalendarComponent implements OnInit {
   location: string;
   description: string;
 
+  responseStatus: string;
+
   constructor(
     private _httpService: HttpService,
     private _authentication: AuthenticationService
@@ -147,6 +149,14 @@ export class CalendarComponent implements OnInit {
       finishDate: this.endDate,
       finishHour: this.endPm && this.endHour !== 12 ? this.endHour + 11 : this.endHour - 1,
       finishMinute: this.endMinute
-    }).subscribe(res => { console.log(res) })
+    }).subscribe((res: Event) => {
+      if(res.name && res.location && res.start && res.finish) {
+        this.responseStatus = "Event added successfully!";
+        setTimeout(() => this.responseStatus = "", 4000);
+      } else {
+        this.responseStatus = "There was a problem processing your event";
+        setTimeout(() => this.responseStatus = "", 4000);
+      }
+    })
   }
 }

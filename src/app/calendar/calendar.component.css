@@ -73,6 +73,10 @@ textarea {
   width: 70vw;
 }
 
+#status {
+  text-align: center;
+}
+
 @media(max-width: 600px) {
   .timeBreak {
     display: block;

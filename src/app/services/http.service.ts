@@ -17,14 +17,14 @@ export class HttpService {
     return this._http.get<Array<Event>>(this.eventsUrl)
   }
 
-  addEvent(data): Observable<string> {
+  addEvent(data): Observable<Event> {
     let params = new HttpParams()
     Object.keys(data).forEach(key => {
       if(key !== "name" && key !== "location" && key !== "description") {
         params = params.append(key.toString(), data[key].toString())
       }
     })
-    return this._http.post<string>(this.eventsUrl,
+    return this._http.post<Event>(this.eventsUrl,
       {
         name: data.name,
         location: data.location,
