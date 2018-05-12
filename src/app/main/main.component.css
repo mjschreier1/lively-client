@@ -1,5 +1,6 @@
 main {
   height: auto;
+  min-height: 80vh;
   width: 100vw;
   background-image: url("../../assets/images/apartment.jpg");
   background-size: cover;

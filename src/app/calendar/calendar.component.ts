@@ -62,9 +62,14 @@ export class CalendarComponent implements OnInit {
             this.startMinute = 55;
             this.endMinute = 55;
           } else {
-            this.startMinute < 9
-              ? (this.startMinute = `0${this.startMinute.valueOf() + 1}`)
-              : this.startMinute++;
+            if(this.startMinute < 9) {
+              typeof(this.startMinute) === "string"
+                ? this.startMinute = `0${parseInt(this.startMinute) + 1}`
+                : this.startMinute = `0${this.startMinute + 1}`
+            } else {
+              if(typeof(this.startMinute) === "string") { this.startMinute = parseInt(this.startMinute) }
+              this.startMinute++;
+            }
             this.endMinute = this.startMinute;
           }
         }
@@ -96,8 +101,8 @@ export class CalendarComponent implements OnInit {
 
     this._httpService.getEvents().subscribe(events => {
       events = events.map(event => {
-        event.start = new Date(new Date(event.start).valueOf() + 3600000);
-        event.finish = new Date(new Date(event.finish).valueOf() + 3600000);
+        event.start = new Date(event.start);
+        event.finish = new Date(event.finish);
         return event;
       });
       this.events = events;
@@ -135,6 +140,10 @@ export class CalendarComponent implements OnInit {
   }
 
   addEvent() {
+    let startHour = this.startHour;
+    let endHour = this.endHour;
+    if(typeof(startHour) === "string") { startHour = parseInt(startHour) }
+    if(typeof(endHour) === "string") { endHour = parseInt(endHour) }
     this._httpService.addEvent({
       name: this.name,
       location: this.location,
@@ -142,12 +151,12 @@ export class CalendarComponent implements OnInit {
       startYear: this.startYear,
       startMonth: this.startMonth,
       startDate: this.startDate,
-      startHour: this.startPm && this.startHour !== 12 ? this.startHour + 11 : this.startHour - 1,
+      startHour: this.startPm && startHour !== 12 ? startHour + 12 : startHour,
       startMinute: this.startMinute,
       finishYear: this.endYear,
       finishMonth: this.endMonth,
       finishDate: this.endDate,
-      finishHour: this.endPm && this.endHour !== 12 ? this.endHour + 11 : this.endHour - 1,
+      finishHour: this.endPm && endHour !== 12 ? endHour + 12 : endHour,
       finishMinute: this.endMinute
     }).subscribe((res: Event) => {
       if(res.name && res.location && res.start && res.finish) {
