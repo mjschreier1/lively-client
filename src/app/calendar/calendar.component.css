@@ -77,6 +77,14 @@ textarea {
   text-align: center;
 }
 
+i {
+  float: right;
+}
+
+i:hover {
+  cursor: pointer;
+}
+
 @media(max-width: 600px) {
   .timeBreak {
     display: block;

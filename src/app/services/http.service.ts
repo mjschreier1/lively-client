@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Event } from '../interfaces/event';
 import { User } from '../interfaces/user';
+import { DeleteResponse } from '../interfaces/delete-response';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class HttpService {
       },
       { params }
     )
+  }
+
+  deleteEvent(id): Observable<DeleteResponse> {
+    return this._http.delete<DeleteResponse>(`${this.eventsUrl}/${id}`)
   }
 
   authenticateUser(last, pin): Observable<User> {

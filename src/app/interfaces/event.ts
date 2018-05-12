@@ -1,7 +1,8 @@
 export interface Event extends Object {
+  id: number,
   name: string,
   location: string,
   description?: string,
-  start: any,
-  finish: any
+  start: Date,
+  finish: Date
 }

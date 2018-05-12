@@ -168,4 +168,12 @@ export class CalendarComponent implements OnInit {
       }
     })
   }
+
+  deleteEvent(id) {
+    if(confirm("Are you sure you want to delete this event?")) {
+      this._httpService.deleteEvent(id).subscribe(res => {
+        this.events = this.events.filter(event => event.id !== res.id)
+      })
+    }
+  }
 }

@@ -84,6 +84,7 @@
   <ul>
     <li *ngFor="let event of events">
       <div class="card">
+        <i class="fas fa-times" *ngIf="user.admin" (click)="deleteEvent(event.id)"></i>
         <h3>{{ event.name }}</h3>
         <p>{{ event.start.toLocaleTimeString("en-US").replace(":00 ", "") }} - {{ event.finish.toLocaleTimeString("en-US").replace(":00 ", "") }}</p>
         <p>{{ event.start.toDateString() }}</p>
