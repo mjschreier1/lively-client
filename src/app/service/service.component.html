@@ -1,10 +1,43 @@
-<ul>
-  <li *ngFor="let request of requests">
-    <div class="card">
-      <h4>{{ request.unit }}</h4>
-      <h4>{{ request.subject }}</h4>
-      <p>{{ request.description }}</p>
-      <p>Management Notes: {{ request.admin_notes || "N/A" }}</p>
-    </div>
-  </li>
-</ul>
+<section id="serviceComponent">
+  <div class="card">
+    <h2>Submit a New Service Request</h2>
+    <form #addRequest="ngForm" (ngSubmit)="addServiceRequest()">
+      <div class="flexLarge">
+        <div class="flexLargeItem">
+          <div class="flexMedium">
+            <label for="unit" class="lineBreak">Unit</label>
+            <input type="text" name="unit" class="lineBreak marginBottom" #unit="ngModel" [(ngModel)]="newRequest.unit" required />
+          </div>
+          <div class="flexMedium">
+            <label for="contact" class="lineBreak">Best Contact Number during Business Hours</label>
+            <input type="text" name="contact" class="lineBreak marginBottom" #contact="ngModel" [(ngModel)]="newRequest.contact" required />
+          </div>
+        </div>
+        <div class="flexLargeItem">
+          <div class="flexMedium">
+            <label for="subject" class="lineBreak">Subject</label>
+            <input type="text" name="subject" class="lineBreak marginBottom" #subject="ngModel" [(ngModel)]="newRequest.subject" required />
+          </div>
+          <div class="flexLargeItem">
+            <label for="description" class="lineBreak">Description</label>
+            <textarea rows="3" name="description" class="lineBreak marginBottom" #description="ngModel" [(ngModel)]="newRequest.description" required></textarea>
+          </div>
+        </div>
+      </div>
+      <button type="submit" [disabled]="!newRequest.unit || !newRequest.contact || !newRequest.subject || !newRequest.description">Submit Service Request</button>
+    </form>
+    <p *ngIf="statusMessage" id="statusMessage">{{ statusMessage }}</p>
+  </div>
+
+  <ul>
+    <li *ngFor="let request of requests">
+      <div class="card requests">
+        <h3>Unit {{ request.unit }}</h3>
+        <h3>{{ request.subject }}</h3>
+        <p>Status: {{ request.open ? "Open" : "Closed" }}</p>
+        <p>Description: {{ request.description }}</p>
+        <p>Management Notes: {{ request.admin_notes || "N/A" }}</p>
+      </div>
+    </li>
+  </ul>
+</section>

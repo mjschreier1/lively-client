@@ -1,0 +1,77 @@
+#serviceComponent {
+  position: static;
+  color: #3C6E71;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+ul {
+  margin: 10px 0 calc(10vh + 20px);
+}
+
+.marginBottom {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 10px;
+}
+
+h2, #statusMessage {
+  text-align: center;
+}
+
+textarea, input {
+  width: 75vw;
+}
+
+button {
+  background-color: #BEEE62;
+  font-size: 16px;
+  display: block;
+  margin: auto;
+}
+
+button:disabled {
+  background-color: #aaaaaa;
+  color: #eeeeee;
+  cursor: default;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+@media(min-width: 650px) {
+  .flexMedium {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  input {
+    width: initial;
+  }
+
+  .requests {
+    text-align: center;
+  }
+}
+
+@media(min-width: 1000px) {
+  .flexMedium {
+    display: initial;
+    justify-content: initial;
+  }
+
+  .flexLarge {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  textarea, input {
+    width: 30vw;
+  }
+}
+

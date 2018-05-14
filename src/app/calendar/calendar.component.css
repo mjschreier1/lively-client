@@ -45,11 +45,6 @@ h2 {
   display: inline;
 }
 
-.lineBreak {
-  display: block;
-  margin-bottom: 10px;
-}
-
 #endTime {
   margin-top: 20px;
 }

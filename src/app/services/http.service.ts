@@ -48,4 +48,8 @@ export class HttpService {
   getRequests(id): Observable<Array<ServiceRequest>> {
     return this._http.get<Array<ServiceRequest>>(`${this.serviceUrl}/${id}`)
   }
+
+  addServiceRequest(request): Observable<ServiceRequest> {
+    return this._http.post<ServiceRequest>(this.serviceUrl, request)
+  }
 }

@@ -12,6 +12,7 @@ export class AuthenticationService {
 
   constructor(private _http: HttpService) {
     this.user = new BehaviorSubject({
+      id: null,
       authenticated: false,
       admin: false
     })

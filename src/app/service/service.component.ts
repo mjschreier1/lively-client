@@ -12,6 +12,8 @@ import { ServiceRequest } from '../interfaces/service-request';
 export class ServiceComponent implements OnInit {
   user: User;
   requests: Array<ServiceRequest>;
+  newRequest: ServiceRequest;
+  statusMessage: string;
 
   constructor(
     private _httpService: HttpService,
@@ -20,10 +22,32 @@ export class ServiceComponent implements OnInit {
 
   ngOnInit() {
     this._authenticationService.user.subscribe(user => {
-      this.user = user
+      this.user = user;
+      this.newRequest = {
+        userId: user.id.toString(),
+        unit: "",
+        contact: "",
+        subject: "",
+        description: ""
+      }
     })
     this._httpService.getRequests(this.user.id).subscribe(requests => {
-      this.requests = requests
+      this.requests = requests;
+    })
+  }
+
+  addServiceRequest() {
+    this._httpService.addServiceRequest(this.newRequest).subscribe(response => {
+      this.requests.push(response);
+      this.newRequest = {
+        userId: this.user.id.toString(),
+        unit: "",
+        contact: "",
+        subject: "",
+        description: ""
+      }
+      this.statusMessage = "Service request submitted successfully";
+      setTimeout(() => this.statusMessage = "", 4000);
     })
   }
 
