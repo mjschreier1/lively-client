@@ -1,3 +1,10 @@
-<p>
-  service works!
-</p>
+<ul>
+  <li *ngFor="let request of requests">
+    <div class="card">
+      <h4>{{ request.unit }}</h4>
+      <h4>{{ request.subject }}</h4>
+      <p>{{ request.description }}</p>
+      <p>Management Notes: {{ request.admin_notes || "N/A" }}</p>
+    </div>
+  </li>
+</ul>

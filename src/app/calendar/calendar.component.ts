@@ -54,7 +54,6 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this._authentication.user.subscribe(user => {
-      console.log(user)
       this.user = user;
       if (user.admin) {
         while (this.startMinute % 5 !== 0) {
