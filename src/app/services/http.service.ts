@@ -52,4 +52,12 @@ export class HttpService {
   addServiceRequest(request): Observable<ServiceRequest> {
     return this._http.post<ServiceRequest>(this.serviceUrl, request)
   }
+
+  addServiceRequestForResident(request): Observable<ServiceRequest> {
+    return this._http.post<ServiceRequest>(`${this.serviceUrl}/admin`, request)
+  }
+
+  getOpenRequests(): Observable<Array<ServiceRequest>> {
+    return this._http.get<Array<ServiceRequest>>(`${this.serviceUrl}/open`)
+  }
 }

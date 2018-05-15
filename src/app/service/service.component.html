@@ -1,5 +1,66 @@
 <section id="serviceComponent">
-  <div class="card">
+  <div *ngIf="user.admin" class="buttons">
+    <button id="openRequestsButton" class="navButton" (click)="toggleNavigation('openRequests')">Open Requests</button>
+    <button id="addAsResidentButton" class="navButton" (click)="toggleNavigation('addAsResident')">My Requests</button>
+    <button id="addForResidentButton" class="navButton" (click)="toggleNavigation('addForResident')">Add for Resident</button>
+  </div>
+
+  <div *ngIf="navigation === 'openRequests'" id="openRequests">
+    <ul>
+      <li *ngFor="let openRequest of openRequests; let i = index">
+        <div class="card openRequest" (click)="toggleCardExpansion(i)">
+          <h3>Unit {{ openRequest.unit }}</h3>
+          <h3>{{ openRequest.subject }}</h3>
+          <p *ngIf="openRequest.expanded">Resident: {{ openRequest.user.first }} {{ openRequest.user.last }}</p>
+          <p *ngIf="openRequest.expanded">Contact Number: {{ openRequest.contact }}</p>
+          <p *ngIf="openRequest.expanded">Description: {{ openRequest.description }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="navigation === 'addForResident'" class="card" id="addForResident">
+    <h2>Submit a New Service Request</h2>
+    <form #addRequest="ngForm" (ngSubmit)="addServiceRequestForResident()">
+      <div class="flexLarge">
+        <div class="flexLargeItem">
+          <div class="flexMedium">
+            <label for="lastName" class="lineBreak">Resident Last Name</label>
+            <input type="text" name="lastName" class="lineBreak marginBottom" #last="ngModel" [(ngModel)]="residentRequest.last" required />
+          </div>
+          <div class="flexMedium">
+            <label for="email" class="lineBreak">Resident Email</label>
+            <input type="text" name="email"  class="lineBreak marginBottom" #email="ngModel" [(ngModel)]="residentRequest.email" required />
+          </div>
+          <div class="flexMedium">
+            <label for="unit" class="lineBreak">Unit</label>
+            <input type="text" name="unit" class="lineBreak marginBottom" #unit="ngModel" [(ngModel)]="residentRequest.unit" required />
+          </div>
+        </div>
+        <div class="flexLargeItem">
+          <div class="flexMedium">
+            <label for="contact" class="lineBreak">Best Contact Number during Business Hours</label>
+            <input type="text" name="contact" class="lineBreak marginBottom" #contact="ngModel" [(ngModel)]="residentRequest.contact" required
+            />
+          </div>
+          <div class="flexMedium">
+            <label for="subject" class="lineBreak">Subject</label>
+            <input type="text" name="subject" class="lineBreak marginBottom" #subject="ngModel" [(ngModel)]="residentRequest.subject" required
+            />
+          </div>
+          <div class="flexLargeItem">
+            <label for="description" class="lineBreak">Description</label>
+            <textarea rows="3" name="description" class="lineBreak marginBottom" #description="ngModel" [(ngModel)]="residentRequest.description"
+              required></textarea>
+          </div>
+        </div>
+      </div>
+      <button type="submit" [disabled]="!residentRequest.last || !residentRequest.email || !residentRequest.unit || !residentRequest.contact || !residentRequest.subject || !residentRequest.description">Submit Service Request</button>
+    </form>
+    <p *ngIf="statusMessage" id="statusMessage">{{ statusMessage }}</p>
+  </div>
+
+  <div *ngIf="!user.admin || navigation === 'addAsResident'" class="card" id="addAsResident">
     <h2>Submit a New Service Request</h2>
     <form #addRequest="ngForm" (ngSubmit)="addServiceRequest()">
       <div class="flexLarge">

@@ -13,7 +13,10 @@ export class ServiceComponent implements OnInit {
   user: User;
   requests: Array<ServiceRequest>;
   newRequest: ServiceRequest;
+  residentRequest: ServiceRequest;
   statusMessage: string;
+  navigation: string;
+  openRequests: Array<ServiceRequest>;
 
   constructor(
     private _httpService: HttpService,
@@ -31,6 +34,20 @@ export class ServiceComponent implements OnInit {
         description: ""
       }
     })
+    if(this.user.admin) {
+      this.navigation = "openRequests";
+      this._httpService.getOpenRequests().subscribe(requests => {
+        this.openRequests = requests;
+      })
+      this.residentRequest = {
+        last: "",
+        email: "",
+        unit: "",
+        contact: "",
+        subject: "",
+        description: ""
+      }
+    }
     this._httpService.getRequests(this.user.id).subscribe(requests => {
       this.requests = requests;
     })
@@ -49,6 +66,30 @@ export class ServiceComponent implements OnInit {
       this.statusMessage = "Service request submitted successfully";
       setTimeout(() => this.statusMessage = "", 4000);
     })
+  }
+
+  addServiceRequestForResident() {
+    this._httpService.addServiceRequestForResident(this.residentRequest).subscribe(response => {
+      this.openRequests.push(response);
+      this.residentRequest = {
+        last: "",
+        email: "",
+        unit: "",
+        contact: "",
+        subject: "",
+        description: ""
+      }
+      this.statusMessage = "Service request submitted successfully";
+      setTimeout(() => this.statusMessage = "", 4000);
+    })
+  }
+
+  toggleNavigation(view) {
+    this.navigation = view
+  }
+
+  toggleCardExpansion(i) {
+    this.openRequests[i].expanded = !this.openRequests[i].expanded
   }
 
 }

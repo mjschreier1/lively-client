@@ -44,6 +44,48 @@ button:hover {
   cursor: pointer;
 }
 
+.openRequest:hover {
+  cursor: pointer;
+}
+
+.buttons {
+  width: 85vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navButton {
+  width: 25vw;
+  height: 45px;
+}
+
+#openRequestsButton {
+  background-color: #F4743B;
+  color: #eeeeee;
+}
+
+#openRequestsButton:hover {
+  background-color: #FF965D;
+}
+
+#addAsResidentButton {
+  background-color: #3C6E71;
+  color: #eeeeee;
+}
+
+#addAsResidentButton:hover {
+  background-color: #5e9093;
+}
+
+#addForResidentButton {
+  background-color: #70AE6E;
+  color: #eeeeee;
+}
+
+#addForResidentButton:hover {
+  background-color: #92D090;
+}
+
 @media(min-width: 650px) {
   .flexMedium {
     display: flex;
