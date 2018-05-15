@@ -1,3 +1,8 @@
-<p>
-  payment works!
-</p>
+<section id="paymentComponent">
+  <div class="card">
+    <form #paymentForm="ngForm" (submit)="processPayment()">
+      <label for="amount">Amount</label>
+      <input type="number" name="amount" [(ngModel)]="amount" />
+    </form>
+  </div>
+</section>

@@ -21,6 +21,7 @@ export class CredentialsComponent implements OnInit {
   }
 
   authenticateUser() {
+    this.credentials.last = `${this.credentials.last.slice(0, 1).toUpperCase()}${this.credentials.last.slice(1)}`
     this._authentication.authenticateUser(this.credentials)
   }
 

@@ -1,0 +1,8 @@
+#paymentComponent {
+  position: static;
+  color: #3C6E71;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
