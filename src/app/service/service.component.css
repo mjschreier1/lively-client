@@ -24,7 +24,7 @@ h2, #statusMessage {
 }
 
 textarea, input {
-  width: 75vw;
+  width: 77vw;
 }
 
 button {
@@ -41,10 +41,6 @@ button:disabled {
 }
 
 button:hover {
-  cursor: pointer;
-}
-
-.openRequest:hover {
   cursor: pointer;
 }
 
@@ -86,6 +82,36 @@ button:hover {
   background-color: #92D090;
 }
 
+.expansion {
+  float: right;
+}
+
+.expansion:hover {
+  cursor: pointer;
+}
+
+.openRequest p {
+  margin-top: 0;
+}
+
+.flexSmall {
+  display: flex;
+  justify-content: left;
+}
+
+.paddingRight {
+  padding-right: 10px;
+}
+
+.characterCount {
+  font-size: 12px;
+  text-align: right;
+}
+
+#addForResident {
+  margin: 10px 0 calc(10vh + 20px);
+}
+
 @media(min-width: 650px) {
   .flexMedium {
     display: flex;
@@ -99,12 +125,29 @@ button:hover {
   .requests {
     text-align: center;
   }
+
+  .openRequest textarea {
+    width: 30vw;
+  }
+
+  .openRequest button {
+    float: right;
+  }
+}
+
+@media(min-width: 750px) {
+
 }
 
 @media(min-width: 1000px) {
   .flexMedium {
     display: initial;
     justify-content: initial;
+  }
+
+  .openRequest .flexMedium {
+    display: flex;
+    justify-content: space-between;
   }
 
   .flexLarge {

@@ -37,7 +37,7 @@ import { ReserveComponent } from './reserve/reserve.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

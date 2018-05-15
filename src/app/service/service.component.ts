@@ -37,6 +37,9 @@ export class ServiceComponent implements OnInit {
     if(this.user.admin) {
       this.navigation = "openRequests";
       this._httpService.getOpenRequests().subscribe(requests => {
+        requests.forEach(request => {
+          if(!request.admin_notes) { request.admin_notes = "" }
+        })
         this.openRequests = requests;
       })
       this.residentRequest = {
@@ -55,6 +58,7 @@ export class ServiceComponent implements OnInit {
 
   addServiceRequest() {
     this._httpService.addServiceRequest(this.newRequest).subscribe(response => {
+      response.admin_notes = "";
       this.requests.push(response);
       this.newRequest = {
         userId: this.user.id.toString(),
@@ -62,7 +66,8 @@ export class ServiceComponent implements OnInit {
         contact: "",
         subject: "",
         description: ""
-      }
+      };
+      if(this.user.admin) { this.openRequests.push(response) }
       this.statusMessage = "Service request submitted successfully";
       setTimeout(() => this.statusMessage = "", 4000);
     })
@@ -70,6 +75,7 @@ export class ServiceComponent implements OnInit {
 
   addServiceRequestForResident() {
     this._httpService.addServiceRequestForResident(this.residentRequest).subscribe(response => {
+      response.admin_notes = "";
       this.openRequests.push(response);
       this.residentRequest = {
         last: "",
@@ -90,6 +96,20 @@ export class ServiceComponent implements OnInit {
 
   toggleCardExpansion(i) {
     this.openRequests[i].expanded = !this.openRequests[i].expanded
+  }
+
+  updateRequest(i) {
+    this._httpService.updateServiceRequest(this.openRequests[i].id, this.openRequests[i].open, this.openRequests[i].admin_notes).subscribe(response => {
+      if(!response.open) { this.openRequests.splice(i, 1) }
+      if(response.user.id === this.user.id) {
+        this.requests.forEach(request => {
+          if(request.id === response.id) {
+            request.open = response.open;
+            request.admin_notes = response.admin_notes;
+          }
+        })
+      }
+    })
   }
 
 }

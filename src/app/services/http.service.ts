@@ -60,4 +60,8 @@ export class HttpService {
   getOpenRequests(): Observable<Array<ServiceRequest>> {
     return this._http.get<Array<ServiceRequest>>(`${this.serviceUrl}/open`)
   }
+
+  updateServiceRequest(id, open, admin_notes): Observable<ServiceRequest> {
+    return this._http.put<ServiceRequest>(this.serviceUrl, { id: id, open: typeof(open) === "boolean" ? open.toString() : open, admin_notes: admin_notes })
+  }
 }

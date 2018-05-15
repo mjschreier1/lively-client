@@ -8,12 +8,31 @@
   <div *ngIf="navigation === 'openRequests'" id="openRequests">
     <ul>
       <li *ngFor="let openRequest of openRequests; let i = index">
-        <div class="card openRequest" (click)="toggleCardExpansion(i)">
-          <h3>Unit {{ openRequest.unit }}</h3>
-          <h3>{{ openRequest.subject }}</h3>
-          <p *ngIf="openRequest.expanded">Resident: {{ openRequest.user.first }} {{ openRequest.user.last }}</p>
-          <p *ngIf="openRequest.expanded">Contact Number: {{ openRequest.contact }}</p>
-          <p *ngIf="openRequest.expanded">Description: {{ openRequest.description }}</p>
+        <div class="card openRequest">
+            <i class="{{ openRequest.expanded ? 'fas fa-minus' : 'fas fa-plus' }} expansion" (click)="toggleCardExpansion(i)"></i>
+            <h3>Unit {{ openRequest.unit }} - {{ openRequest.subject }}</h3>
+            <div class="flexMedium">
+              <div class="flexMediumItem paddingRight">
+                <p *ngIf="openRequest.expanded" class="lineBreak">Resident: {{ openRequest.user.first }} {{ openRequest.user.last }}</p>
+                <p *ngIf="openRequest.expanded" class="lineBreak">Contact Number: {{ openRequest.contact }}</p>
+                <p *ngIf="openRequest.expanded" class="lineBreak">Description: {{ openRequest.description }}</p>
+              </div>
+            <div class="flexMediumItem">
+              <form *ngIf="openRequest.expanded" #updateStatus="ngForm" (ngSubmit)="updateRequest(i)">
+                <div class="flexSmall leftJustify">
+                  <label for="status" class="lineBreak">Status: </label>
+                  <select name="status" class="lineBreak" #status="ngModel" [(ngModel)]="openRequest.open">
+                    <option value="true" selected>Open</option>
+                    <option value="false">Closed</option>
+                  </select>
+                </div>
+                <label for="adminNotes">Management Notes:</label>
+                <textarea rows="3" type="text" name="admin_notes" class="lineBreak" #adminNotes="ngModel" [(ngModel)]="openRequest.admin_notes" required maxlength="1000"></textarea>
+                <p class="characterCount marginBottom">{{ 1000 - openRequest.admin_notes.length }} characters remaining</p>
+                <button type="submit" [disabled]="!status.dirty && !adminNotes.dirty">Update Service Request</button>
+              </form>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -50,9 +69,10 @@
           </div>
           <div class="flexLargeItem">
             <label for="description" class="lineBreak">Description</label>
-            <textarea rows="3" name="description" class="lineBreak marginBottom" #description="ngModel" [(ngModel)]="residentRequest.description"
-              required></textarea>
+            <textarea rows="3" name="description" class="lineBreak" #description="ngModel" [(ngModel)]="residentRequest.description"
+              required maxlength="1000"></textarea>
           </div>
+          <p class="characterCount marginBottom">{{ 1000 - residentRequest.description.length }} characters remaining</p>
         </div>
       </div>
       <button type="submit" [disabled]="!residentRequest.last || !residentRequest.email || !residentRequest.unit || !residentRequest.contact || !residentRequest.subject || !residentRequest.description">Submit Service Request</button>
@@ -81,8 +101,9 @@
           </div>
           <div class="flexLargeItem">
             <label for="description" class="lineBreak">Description</label>
-            <textarea rows="3" name="description" class="lineBreak marginBottom" #description="ngModel" [(ngModel)]="newRequest.description" required></textarea>
+            <textarea rows="3" name="description" class="lineBreak" #description="ngModel" [(ngModel)]="newRequest.description" required maxlength="1000"></textarea>
           </div>
+          <p class="characterCount marginBottom">{{ 1000 - newRequest.description.length }} characters remaining</p>
         </div>
       </div>
       <button type="submit" [disabled]="!newRequest.unit || !newRequest.contact || !newRequest.subject || !newRequest.description">Submit Service Request</button>
@@ -90,7 +111,7 @@
     <p *ngIf="statusMessage" id="statusMessage">{{ statusMessage }}</p>
   </div>
 
-  <ul>
+  <ul *ngIf="navigation === 'addAsResident'">
     <li *ngFor="let request of requests">
       <div class="card requests">
         <h3>Unit {{ request.unit }}</h3>
