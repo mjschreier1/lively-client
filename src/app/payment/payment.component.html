@@ -2,12 +2,16 @@
   <div class="card">
     <h2>Make a Payment</h2>
     <form #paymentForm="ngForm" (submit)="processPayment(paymentForm)" class="paymentForm">
-      <div *ngIf="!payment.successful" class="lineBreak">
-        <label for="amount">Amount: $</label>
-        <input type="number" name="amount" class="amount" min="0" [(ngModel)]="amount" />
+      <div class="flexLarge">
+        <div *ngIf="!payment.successful" class="lineBreak">
+          <label for="amount">Amount: $</label>
+          <input type="number" name="amount" class="amount" min="0" [(ngModel)]="amount" />
+        </div>
+        <div class="flexMedium cardContainer">
+          <label *ngIf="!payment.successful" for="card-info" class="lineBreak">Card Info:&nbsp;</label>
+          <div *ngIf="!payment.successful" id="card-info" class="lineBreak" #cardInfo></div>
+        </div>
       </div>
-      <label *ngIf="!payment.successful" for="card-info" class="lineBreak">Card Info:</label>
-      <div *ngIf="!payment.successful" id="card-info" class="lineBreak" #cardInfo></div>
       <div *ngIf="!payment.successful && error" class="lineBreak error" role="alert">{{ error }}</div>
       <button type="submit" *ngIf="!payment.successful" [disabled]="error || amount === 0 || amount < 0 || amount == null || processing">Submit Payment for ${{ amount }}</button>
     </form>
