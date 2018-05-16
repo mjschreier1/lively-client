@@ -6,3 +6,7 @@
   align-items: center;
   margin-top: 10px;
 }
+
+.amount {
+  width: 60px;
+}

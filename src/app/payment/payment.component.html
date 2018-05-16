@@ -1,8 +1,12 @@
 <section id="paymentComponent">
   <div class="card">
-    <form #paymentForm="ngForm" (submit)="processPayment()">
-      <label for="amount">Amount</label>
-      <input type="number" name="amount" [(ngModel)]="amount" />
+    <form #paymentForm="ngForm" (submit)="processPayment(paymentForm)" class="paymentForm">
+      <label for="amount">Amount: $</label>
+      <input type="number" name="amount" class="amount" min="0" [(ngModel)]="amount" />
+      <label for="card-info">Card Info</label>
+      <div id="card-info" #cardInfo></div>
+      <div id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+      <button type="submit">Submit Payment for ${{ amount }}</button>
     </form>
   </div>
 </section>
