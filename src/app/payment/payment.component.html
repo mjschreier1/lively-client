@@ -1,8 +1,25 @@
 <section id="paymentComponent">
   <div class="card">
-    <form #paymentForm="ngForm" (submit)="processPayment()">
-      <label for="amount">Amount</label>
-      <input type="number" name="amount" [(ngModel)]="amount" />
+    <h2>Make a Payment</h2>
+    <form #paymentForm="ngForm" (submit)="processPayment(paymentForm)" class="paymentForm">
+      <div *ngIf="!payment.successful" class="lineBreak">
+        <label for="amount">Amount: $</label>
+        <input type="number" name="amount" class="amount" min="0" [(ngModel)]="amount" />
+      </div>
+      <label *ngIf="!payment.successful" for="card-info" class="lineBreak">Card Info:</label>
+      <div *ngIf="!payment.successful" id="card-info" class="lineBreak" #cardInfo></div>
+      <div *ngIf="!payment.successful && error" class="lineBreak error" role="alert">{{ error }}</div>
+      <button type="submit" *ngIf="!payment.successful" [disabled]="error || amount === 0 || amount < 0 || amount == null || processing">Submit Payment for ${{ amount }}</button>
     </form>
+    <p *ngIf="payment.successful" class="statusMessage">Payment processed successfully! Please screenshot or print the receipt below for your records.</p>
+    <p *ngIf="badRequest" class="statusMessage error">Whoops, something went wrong. Please try again or contact the office for additional support.</p>
+    <button *ngIf="payment.successful" (click)="resetForm()">Submit Another Payment</button>
+  </div>
+
+  <div *ngIf="payment.successful" class="card" id="receipt">
+    <h2>Receipt</h2>
+    <p>{{ payment.submittedOn.toDateString() }} {{ payment.submittedOn.toLocaleTimeString("en-US") }}</p>
+    <p>Payment submitted by {{ payment.user.first }} {{ payment.user.last }}</p>
+    <p>Amount: ${{ payment.amount.toFixed(2) }}</p>
   </div>
 </section>
