@@ -22,6 +22,9 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('cardInfo') cardInfo: ElementRef;
   amount: number = 0;
   user: User;
+  payment: Payment;
+  processing: boolean = false;
+  badRequest: boolean = false;
 
   card: any;
   cardHandler = this.onChange.bind(this);
@@ -37,21 +40,35 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     this._authenticationService.user.subscribe(user => {
       this.user = user;
     })
+    this.payment = {
+      id: null,
+      user: this.user,
+      amount: null,
+      submittedOn: null,
+      successful: false
+    }
   }
 
   ngAfterViewInit() {
-    this.card = elements.create('card');
+    const style = {
+      base: {
+        color: "#3C6E71",
+        fontFamily: "Montserrat, sans-serif"
+      }
+    }
+    this.card = elements.create("card", { style });
     this.card.mount(this.cardInfo.nativeElement);
 
-    this.card.addEventListener('change', this.cardHandler);
+    this.card.addEventListener("change", this.cardHandler);
   }
 
   ngOnDestroy() {
-    this.card.removeEventListener('change', this.cardHandler);
+    this.card.removeEventListener("change", this.cardHandler);
     this.card.destroy();
   }
 
   onChange({ error }) {
+    console.log(this.card)
     if (error) {
       this.error = error.message;
     } else {
@@ -61,16 +78,38 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async processPayment(form: NgForm) {
+    this.processing = true;
     const { token, error } = await stripe.createToken(this.card);
     console.log(token)
 
     if (error) {
-      console.log('Something is wrong:', error);
+      console.log("Something is wrong:", error);
+      this.badRequest = true;
+      this.processing = false;
+      setTimeout(() => this.badRequest = false, 5000)
     } else {
       this._httpService.processPayment({ id: this.user.id, amount: form.value.amount, stripeToken: token.id }).subscribe((payment: Payment) => {
-        console.log("Success!")
+        console.log(payment);
+        this.badRequest = false;
+        payment.submittedOn = new Date(payment.submittedOn);
+        payment.amount /= 100;
+        this.payment = payment;
+        this.processing = false;
       })
     }
+  }
+
+  resetForm() {
+    this.ngOnDestroy();
+    this.payment = {
+      id: null,
+      user: this.user,
+      amount: null,
+      submittedOn: null,
+      successful: false
+    };
+    this.amount = 0;
+    setTimeout(() => this.ngAfterViewInit(), 10);
   }
 }
 

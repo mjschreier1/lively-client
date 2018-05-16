@@ -16,7 +16,14 @@
   <script src="https://js.stripe.com/v3/"></script>
   <script type="text/javascript">
     const stripe = Stripe("pk_test_vrKxvAtxnUeq3TrkdC0huoPN");
-    const elements = stripe.elements();
+    const elements = stripe.elements({
+        fonts: [
+          {
+            family: "Montserrat",
+            cssSrc: "https://fonts.googleapis.com/css?family=Montserrat"
+          }
+        ]
+      });
   </script>
 </body>
 </html>

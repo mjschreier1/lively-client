@@ -4,5 +4,6 @@ export interface Payment {
   id: number,
   user: User,
   amount: number,
-  submittedOn: Date
+  submittedOn: Date,
+  successful?: boolean
 }

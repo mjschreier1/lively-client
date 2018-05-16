@@ -7,6 +7,43 @@
   margin-top: 10px;
 }
 
+h2 {
+  text-align: center;
+}
+
+button {
+  background-color: #BEEE62;
+  font-size: 16px;
+  display: block;
+  margin: auto;
+}
+
+button:disabled {
+  background-color: #aaaaaa;
+  color: #eeeeee;
+  cursor: default;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 .amount {
   width: 60px;
+}
+
+#receipt {
+  margin: 10px 0 calc(10vh + 20px);
+}
+
+#card-info {
+  max-width: 400px;
+}
+
+.error {
+  color: red;
+}
+
+.statusMessage {
+  text-align: center;
 }
