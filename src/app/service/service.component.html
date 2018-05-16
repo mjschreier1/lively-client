@@ -38,7 +38,7 @@
     </ul>
   </div>
 
-  <div *ngIf="navigation === 'addForResident'" class="card" id="addForResident">
+  <div *ngIf="navigation === 'addForResident'" [ngClass]="{ 'bottomOfPage': requests.length === 0 }" class="card" id="addForResident">
     <h2>Submit a New Service Request</h2>
     <form #addRequest="ngForm" (ngSubmit)="addServiceRequestForResident()">
       <div class="flexLarge">
@@ -111,7 +111,7 @@
     <p *ngIf="statusMessage" id="statusMessage">{{ statusMessage }}</p>
   </div>
 
-  <ul *ngIf="navigation === 'addAsResident'">
+  <ul *ngIf="navigation === 'addAsResident' || !user.admin">
     <li *ngFor="let request of requests">
       <div class="card requests">
         <h3>Unit {{ request.unit }}</h3>
