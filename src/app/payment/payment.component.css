@@ -42,8 +42,31 @@ button:hover {
 
 .error {
   color: red;
+  text-align: center;
 }
 
 .statusMessage {
   text-align: center;
+}
+
+@media(min-width: 601px) {
+  .flexMedium {
+    display: flex;
+    justify-content: left;
+  }
+
+  #card-info {
+    width: 400px;
+  }
+}
+
+@media(min-width: 841px) {
+  .flexLarge {
+    display: flex;
+    justify-content: center;
+  }
+
+  .cardContainer {
+    margin-left: 5vw;
+  }
 }
