@@ -13,6 +13,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../interfaces/user';
 import { Payment } from '../interfaces/payment';
 import { DateQuery } from '../interfaces/date-query';
+import { UserQuery } from '../interfaces/user-query';
 
 @Component({
   selector: "app-payment",
@@ -32,9 +33,13 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
   minDates: Array<number> = [];
   maxDates: Array<number> = [];
   paymentsByDates: Array<Payment> = [];
+  paymentsByResident: Array<Payment> = [];
   paymentsByDatesRange: DateQuery;
-  revenueTotal: number;
+  revenueTotalByDates: number;
+  revenueTotalByResident: number;
   destroyed: boolean;
+  userParams: UserQuery;
+  userQuery: UserQuery;
 
   card: any;
   cardHandler = this.onChange.bind(this);
@@ -65,6 +70,10 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setMonths();
         this.setDates(this.dateQuery.minMonth, this.dateQuery.minYear, true);
         this.setDates(this.dateQuery.maxMonth, this.dateQuery.maxYear, false);
+        this.userParams = {
+          last: "",
+          email: ""
+        }
       }
     });
     this.payment = {
@@ -83,12 +92,7 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (
-      !this.user.admin ||
-      (this.navigation === "makePayment" &&
-        !this.processing &&
-        !this.payment.successful)
-    ) {
+    if (!this.user.admin || (this.navigation === "makePayment" && !this.processing && !this.payment.successful)) {
       this.destroyCard();
     }
   }
@@ -119,7 +123,6 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onChange({ error }) {
-    console.log(this.card);
     if (error) {
       this.error = error.message;
     } else {
@@ -139,7 +142,7 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
       this.processing = false;
       setTimeout(() => (this.badRequest = false), 5000);
     } else {
-      this._httpService.processPayment({ id: this.user.id, amount: Math.round(form.value.amount * 100), stripeToken: token.id }).subscribe((payment: Payment) => {
+      this._httpService.processPayment({ id: this.user.id.toString(), amount: Math.round(form.value.amount * 100).toString(), stripeToken: token.id }).subscribe((payment: Payment) => {
           console.log(payment);
           this.badRequest = false;
           payment.submittedOn = new Date(payment.submittedOn);
@@ -160,7 +163,7 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
       successful: false
     };
     this.amount = 0;
-    setTimeout(this.mountCard, 10);
+    setTimeout(() => this.mountCard(), 10);
   }
 
   toggleNavigation(view) {
@@ -203,14 +206,27 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     this.paymentsByDatesRange = this.dateQuery;
     this._httpService.getPaymentsByDates(this.dateQuery).subscribe(payments => {
       console.log(payments);
-      this.revenueTotal = payments.reduce((acc, payment) => {
+      this.revenueTotalByDates = payments.reduce((acc, payment) => {
         acc += (payment.amount / 100);
         return acc;
       }, 0)
-      payments.forEach(payment => {
-        payment.submittedOn = new Date(payment.submittedOn)
-      })
+      payments.forEach(payment => payment.submittedOn = new Date(payment.submittedOn))
       this.paymentsByDates = payments;
+    })
+  }
+
+  getByResident() {
+    this.userQuery = this.userParams;
+    this.userQuery.last = `${this.userQuery.last.slice(0, 1).toUpperCase()}${this.userQuery.last.slice(1)}`
+    console.log(this.userQuery)
+    this._httpService.getPaymentsByResident(this.userQuery).subscribe(payments => {
+      console.log(payments)
+      this.revenueTotalByResident = payments.reduce((acc, payment) => {
+        acc += (payment.amount / 100);
+        return acc;
+      }, 0)
+      payments.forEach(payment => payment.submittedOn = new Date(payment.submittedOn))
+      this.paymentsByResident = payments;
     })
   }
 }

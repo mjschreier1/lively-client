@@ -123,6 +123,18 @@ button:hover {
   text-align: center;
 }
 
+.centered {
+  margin: auto;
+}
+
+.marginBottom {
+  margin-bottom: 10px;
+}
+
+.summary {
+  background-color: #ffffff;
+}
+
 @media(min-width: 601px) {
   .flexMedium, .flexMediumSpaceAround {
     display: flex;
