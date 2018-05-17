@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
         iconClass: "far fa-calendar-alt",
         routerLink: "/calendar"
       }, {
-        name: "Make a Payment",
+        name: "Payments",
         id: "payment",
         iconClass: "far fa-credit-card",
         routerLink: "/payment"
