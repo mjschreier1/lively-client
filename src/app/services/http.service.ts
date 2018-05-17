@@ -6,6 +6,7 @@ import { User } from '../interfaces/user';
 import { DeleteResponse } from '../interfaces/delete-response';
 import { ServiceRequest } from '../interfaces/service-request';
 import { Payment } from '../interfaces/payment';
+import { UserQuery } from '../interfaces/user-query';
 
 @Injectable({
   providedIn: "root"
@@ -82,5 +83,9 @@ export class HttpService {
       params = params.append(key.toString(), dates[key].toString());
     });
     return this._http.get<Array<Payment>>(this.paymentUrl, { params })
+  }
+
+  getPaymentsByResident(userQuery: UserQuery): Observable<Array<Payment>> {
+    return this._http.get<Array<Payment>>(`${this.paymentUrl}/${userQuery.last}/${userQuery.email}`)
   }
 }

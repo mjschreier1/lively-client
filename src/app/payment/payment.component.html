@@ -35,16 +35,49 @@
             <input type="number" name="maxYear" class="yearInput" #maxYearValue="ngModel" [(ngModel)]="dateQuery.maxYear" (change)="setDates(dateQuery.maxMonth, dateQuery.maxYear, false)" />
           </div>
         </div>
-        <button type="submit" class="lineBreak">Find Payments</button>
+        <button type="submit" class="lineBreak marginBottom">Find Payments</button>
       </form>
     </div>
 
     <div *ngIf="paymentsByDates.length > 0" class="summary card">
-      <h1 class="revenueTotal">Revenue Total ({{ paymentsByDatesRange.minMonth }}/{{ paymentsByDatesRange.minDate }}/{{ paymentsByDatesRange.minYear }} - {{ paymentsByDatesRange.maxMonth }}/{{ paymentsByDatesRange.maxDate }}/{{ paymentsByDatesRange.maxYear }}): ${{ revenueTotal.toFixed(2) }}</h1>
+      <h1 class="revenueTotal">Revenue Total ({{ paymentsByDatesRange.minMonth }}/{{ paymentsByDatesRange.minDate }}/{{ paymentsByDatesRange.minYear }} - {{ paymentsByDatesRange.maxMonth }}/{{ paymentsByDatesRange.maxDate }}/{{ paymentsByDatesRange.maxYear }}): ${{ revenueTotalByDates.toFixed(2) }}</h1>
     </div>
 
     <ul *ngIf="paymentsByDates.length > 0" class="bottomOfPage">
       <li *ngFor="let payment of paymentsByDates">
+        <div class="card centeredSmall flexLargeSpaceBetween">
+          <h3 class="noBottomMarginUntilLarge">Amount: ${{ (payment.amount / 100).toFixed(2) }}</h3>
+          <h3 class="noMarginUntilLarge">{{ payment.user.first }} {{ payment.user.last }}</h3>
+          <h3 class="noTopMarginUntilLarge">{{ payment.submittedOn.toLocaleDateString("en-US") }} at {{ payment.submittedOn.toLocaleTimeString("en-US") }}</h3>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="user.admin && navigation === 'viewByResident'">
+    <div class="card" [ngClass]="{ 'bottomOfPage': paymentsByResident.length === 0 }">
+      <h2>Find Payments By Resident</h2>
+      <form #viewByResidentForm="ngForm" (submit)="getByResident()">
+        <div class="flexMediumSpaceAround">
+          <div class="flexMediumItem">
+            <label for="last" class="lineBreak">Resident Last Name</label>
+            <input type="text" name="last" class="lineBreak centered marginBottom" #lastName="ngModel" [(ngModel)]="userParams.last" required />
+          </div>
+          <div class="flexMediumItem">
+            <label for="email" class="lineBreak">Resident Email</label>
+            <input type="text" name="email" class="lineBreak centered marginBottom" #email="ngModel" [(ngModel)]="userParams.email" required />
+          </div>
+        </div>
+        <button type="submit" class="lineBreak marginBottom" [disabled]="!viewByResidentForm.form.valid">Find Payments</button>
+      </form>
+    </div>
+
+    <div *ngIf="paymentsByResident.length > 0" class="summary card">
+      <h1 class="revenueTotal">Revenue Total ({{ paymentsByResident[0].user.first }} {{ paymentsByResident[0].user.last }}): ${{ revenueTotalByResident.toFixed(2) }}</h1>
+    </div>
+
+    <ul *ngIf="paymentsByResident.length > 0" class="bottomOfPage">
+      <li *ngFor="let payment of paymentsByResident">
         <div class="card centeredSmall flexLargeSpaceBetween">
           <h3 class="noBottomMarginUntilLarge">Amount: ${{ (payment.amount / 100).toFixed(2) }}</h3>
           <h3 class="noMarginUntilLarge">{{ payment.user.first }} {{ payment.user.last }}</h3>
