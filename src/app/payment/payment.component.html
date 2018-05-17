@@ -1,5 +1,60 @@
 <section id="paymentComponent">
-  <div class="card">
+  <div *ngIf="user.admin" class="buttons">
+    <button id="viewByDatesButton" class="navButton" (click)="toggleNavigation('viewByDates')">View By Dates</button>
+    <button id="viewByResidentButton" class="navButton" (click)="toggleNavigation('viewByResident')">View By Resident</button>
+    <button id="makePaymentButton" class="navButton" (click)="toggleNavigation('makePayment')">Make Payment</button>
+  </div>
+
+  <div *ngIf="navigation === 'viewByDates'">
+    <div class="card muchMarginBottom" [ngClass]="{ 'bottomOfPage': paymentsByDates.length === 0 }">
+      <h2>Find Payments by Dates</h2>
+      <form #viewByDatesForm="ngForm" (submit)="getByDates()">
+        <div class="flexMediumSpaceAround">
+          <div class="min lineBreak">
+            <label for="min" class="lineBreak">Start of Range:&nbsp;</label>
+            <select name="minMonth" #minMonthValue="ngModel" [(ngModel)]="dateQuery.minMonth" (change)="setDates(dateQuery.minMonth, dateQuery.minYear, true)">
+              <option *ngFor="let month of months" value="{{ month }}">{{ month }}</option>
+            </select>
+            <p class="dateSeparator">&nbsp;/&nbsp;</p>
+            <select name="minDate" #minDateValue="ngModel" [(ngModel)]="dateQuery.minDate">
+              <option *ngFor="let date of minDates" value="{{ date }}">{{ date }}</option>
+            </select>
+            <p class="dateSeparator">&nbsp;/&nbsp;</p>
+            <input type="number" name="minYear" class="yearInput" #minYearValue="ngModel" [(ngModel)]="dateQuery.minYear" (change)="setDates(dateQuery.minMonth, dateQuery.minYear, true)" />
+          </div>
+          <div class="max lineBreak">
+            <label for="max" class="lineBreak">End of Range:&nbsp;</label>
+            <select name="maxMonth" #maxMonthValue="ngModel" [(ngModel)]="dateQuery.maxMonth" (change)="setDates(dateQuery.maxMonth, dateQuery.maxYear, false)">
+              <option *ngFor="let month of months" value="{{ month }}">{{ month }}</option>
+            </select>
+            <p class="dateSeparator">&nbsp;/&nbsp;</p>
+            <select name="maxDate" #maxDateValue="ngModel" [(ngModel)]="dateQuery.maxDate">
+              <option *ngFor="let date of maxDates" value="{{ date }}">{{ date }}</option>
+            </select>
+            <p class="dateSeparator">&nbsp;/&nbsp;</p>
+            <input type="number" name="maxYear" class="yearInput" #maxYearValue="ngModel" [(ngModel)]="dateQuery.maxYear" (change)="setDates(dateQuery.maxMonth, dateQuery.maxYear, false)" />
+          </div>
+        </div>
+        <button type="submit" class="lineBreak">Find Payments</button>
+      </form>
+    </div>
+
+    <div *ngIf="paymentsByDates.length > 0" class="summary card">
+      <h1 class="revenueTotal">Revenue Total ({{ paymentsByDatesRange.minMonth }}/{{ paymentsByDatesRange.minDate }}/{{ paymentsByDatesRange.minYear }} - {{ paymentsByDatesRange.maxMonth }}/{{ paymentsByDatesRange.maxDate }}/{{ paymentsByDatesRange.maxYear }}): ${{ revenueTotal.toFixed(2) }}</h1>
+    </div>
+
+    <ul *ngIf="paymentsByDates.length > 0" class="bottomOfPage">
+      <li *ngFor="let payment of paymentsByDates">
+        <div class="card centeredSmall flexLargeSpaceBetween">
+          <h3 class="noBottomMarginUntilLarge">Amount: ${{ (payment.amount / 100).toFixed(2) }}</h3>
+          <h3 class="noMarginUntilLarge">{{ payment.user.first }} {{ payment.user.last }}</h3>
+          <h3 class="noTopMarginUntilLarge">{{ payment.submittedOn.toLocaleDateString("en-US") }} at {{ payment.submittedOn.toLocaleTimeString("en-US") }}</h3>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="!user.admin || navigation === 'makePayment'" class="card">
     <h2>Make a Payment</h2>
     <form #paymentForm="ngForm" (submit)="processPayment(paymentForm)" class="paymentForm">
       <div class="flexLarge">
@@ -20,7 +75,7 @@
     <button *ngIf="payment.successful" (click)="resetForm()">Submit Another Payment</button>
   </div>
 
-  <div *ngIf="payment.successful" class="card" id="receipt">
+  <div *ngIf="(!user.admin && payment.successful) || (navigation === 'makePayment' && payment.successful)" class="card" id="receipt">
     <h2>Receipt</h2>
     <p>{{ payment.submittedOn.toDateString() }} {{ payment.submittedOn.toLocaleTimeString("en-US") }}</p>
     <p>Payment submitted by {{ payment.user.first }} {{ payment.user.last }}</p>

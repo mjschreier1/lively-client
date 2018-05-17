@@ -75,4 +75,12 @@ export class HttpService {
   processPayment(body): Observable<Payment> {
     return this._http.post<Payment>(this.paymentUrl, body);
   }
+
+  getPaymentsByDates(dates): Observable<Array<Payment>> {
+    let params = new HttpParams();
+    Object.keys(dates).forEach(key => {
+      params = params.append(key.toString(), dates[key].toString());
+    });
+    return this._http.get<Array<Payment>>(this.paymentUrl, { params })
+  }
 }

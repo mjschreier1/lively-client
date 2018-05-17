@@ -49,10 +49,91 @@ button:hover {
   text-align: center;
 }
 
+.buttons {
+  width: 85vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navButton {
+  width: 25vw;
+  height: 45px;
+}
+
+#viewByDatesButton {
+  background-color: #F4743B;
+  color: #eeeeee;
+}
+
+#viewByDatesButton:hover {
+  background-color: #FF965D;
+}
+
+#viewByResidentButton {
+  background-color: #3C6E71;
+  color: #eeeeee;
+}
+
+#viewByResidentButton:hover {
+  background-color: #5e9093;
+}
+
+#makePaymentButton {
+  background-color: #70AE6E;
+  color: #eeeeee;
+}
+
+#makePaymentButton:hover {
+  background-color: #92D090;
+}
+
+.dateSeparator {
+  display: inline;
+}
+
+.yearInput {
+  width: 50px;
+}
+
+.muchMarginBottom {
+  margin-bottom: 20px;
+}
+
+.bottomOfPage {
+  margin: 10px 0 calc(10vh + 20px);
+}
+
+.centeredSmall {
+  text-align: center;
+}
+
+.noMarginUntilLarge {
+  margin: 0;
+}
+
+.noTopMarginUntilLarge {
+  margin-top: 0;
+}
+
+.noBottomMarginUntilLarge {
+  margin-bottom: 0;
+}
+
+.flexMediumSpaceAround, .revenueTotal {
+  text-align: center;
+}
+
 @media(min-width: 601px) {
-  .flexMedium {
+  .flexMedium, .flexMediumSpaceAround {
     display: flex;
+  }
+
+  .flexMedium {
     justify-content: left;
+  }
+
+  .flexMediumSpaceAround {
+    justify-content: space-around;
   }
 
   #card-info {
@@ -61,12 +142,23 @@ button:hover {
 }
 
 @media(min-width: 841px) {
-  .flexLarge {
+  .flexLarge, .flexLargeSpaceBetween {
     display: flex;
+  }
+
+  .flexLarge {
     justify-content: center;
+  }
+
+  .flexLargeSpaceBetween {
+    justify-content: space-between;
   }
 
   .cardContainer {
     margin-left: 5vw;
+  }
+
+  .noMarginUntilLarge, .noTopMarginUntilLarge, .noBottomMarginUntilLarge {
+    margin: 1em 0;
   }
 }
